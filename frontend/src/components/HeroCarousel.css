@@ -1,0 +1,233 @@
+.hero-carousel {
+  position: relative;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  height: 300px;
+  display: flex;
+  align-items: center;
+}
+
+/* Background glow */
+.hero-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* ── Content ─────────────────────────────────────────────── */
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 32px 80px;
+  gap: 32px;
+  transition: opacity 0.4s ease;
+}
+
+.hero-content.fade {
+  opacity: 0;
+}
+
+/* ── Left Info ───────────────────────────────────────────── */
+.hero-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 55%;
+}
+
+.trending-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  width: fit-content;
+  letter-spacing: 0.5px;
+}
+
+.hero-brand {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hero-model {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+/* Specs row */
+.hero-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hero-spec {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #cbd5e1;
+}
+
+.hero-spec-icon {
+  font-size: 14px;
+}
+
+/* Price */
+.hero-price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.hero-price-npr {
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.hero-price-inr {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* CTA button */
+.hero-cta {
+  padding: 10px 24px;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  width: fit-content;
+  transition: all 0.2s;
+}
+
+.hero-cta:hover {
+  background: var(--accent-hover);
+  box-shadow: 0 0 20px var(--accent-glow);
+  transform: translateY(-2px);
+}
+
+/* ── Right Image ─────────────────────────────────────────── */
+.hero-image-wrapper {
+  flex-shrink: 0;
+  width: 320px;
+  height: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  padding: 12px;
+}
+.hero-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 32px rgba(59, 130, 246, 0.2));
+  transition: transform 0.3s;
+}
+
+.hero-image:hover {
+  transform: scale(1.04);
+}
+
+/* ── Arrow Controls ──────────────────────────────────────── */
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 10;
+  line-height: 1;
+  padding-bottom: 10px;
+}
+
+.hero-arrow:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.hero-arrow.left  { left: 20px; }
+.hero-arrow.right { right: 20px; }
+
+/* ── Bubble Dots ─────────────────────────────────────────── */
+.hero-dots {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.hero-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  border: none;
+  transition: all 0.3s;
+}
+
+.hero-dot.active {
+  background: var(--accent);
+  width: 24px;
+  border-radius: 4px;
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* ── Progress Bar ────────────────────────────────────────── */
+.hero-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--border);
+}
+
+.hero-progress-bar {
+  height: 100%;
+  background: var(--accent);
+  animation: progress 5s linear forwards;
+}
+
+@keyframes progress {
+  from { width: 0%; }
+  to   { width: 100%; }
+}

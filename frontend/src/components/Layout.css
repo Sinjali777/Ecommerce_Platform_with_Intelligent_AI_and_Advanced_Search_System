@@ -1,0 +1,42 @@
+.layout-wrapper {
+  display: flex;
+  height: calc(100vh - 68px);
+  margin-top: 68px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Store Panel ─────────────────────────────────────────── */
+.store-panel {
+  height: 100%;
+  overflow-y: auto;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--light-bg);
+  flex-shrink: 0;
+}
+
+.store-panel.full  { width: 100%; }
+.store-panel.split { width: 70%; }
+
+.store-content {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Chat Panel ──────────────────────────────────────────── */
+.chat-panel {
+  height: 100%;
+  max-height: 100%;
+  background: var(--dark-bg);
+  border-left: 1px solid var(--dark-border);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.chat-panel.closed { width: 0%; }
+.chat-panel.open   { width: 30%; }

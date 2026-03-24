@@ -1,0 +1,124 @@
+.footer {
+  background: var(--dark-bg);
+  border-top: 1px solid var(--dark-border);
+  color: var(--text-light);
+  margin-top: auto;
+}
+
+/* ── Container ───────────────────────────────────────────── */
+.footer-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 28px;
+  padding: 16px 32px 12px 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ── Brand Column ────────────────────────────────────────── */
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-logo-icon { font-size: 18px; }
+
+.footer-logo-text {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+
+.footer-desc {
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.6;
+  max-width: 240px;
+}
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.footer-contact p {
+  font-size: 11px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ── Other Columns ───────────────────────────────────────── */
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-col-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-white);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--dark-border);
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-links li {
+  font-size: 11px;
+  color: #64748b;
+  cursor: pointer;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer-links li:hover {
+  color: var(--accent);
+}
+
+/* ── AI Badge ────────────────────────────────────────────── */
+.footer-ai-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid var(--accent);
+  border-radius: 20px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 600;
+  width: fit-content;
+  margin-top: 4px;
+}
+
+/* ── Bottom Bar ──────────────────────────────────────────── */
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 32px;
+  border-top: 1px solid var(--dark-border);
+  font-size: 11px;
+  color: #475569;
+}

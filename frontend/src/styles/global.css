@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Dark areas (navbar, footer, chat) */
+  --dark-bg:         #0f172a;
+  --dark-secondary:  #1e293b;
+  --dark-border:     #334155;
+
+  /* Light areas (product area) */
+  --light-bg:        #f8fafc;
+  --light-secondary: #f1f5f9;
+  --light-card:      #ffffff;
+  --light-border:    #e2e8f0;
+
+  /* Accent colors */
+  --accent:          #3b82f6;
+  --accent-hover:    #2563eb;
+  --accent-glow:     rgba(59, 130, 246, 0.25);
+  --discount-red:    #ef4444;
+  --discount-bg:     #fef2f2;
+  --success:         #22c55e;
+  --danger:          #ef4444;
+
+  /* Text colors */
+  --text-dark:       #0f172a;
+  --text-body:       #374151;
+  --text-muted:      #6b7280;
+  --text-light:      #f1f5f9;
+  --text-white:      #ffffff;
+
+  /* Legacy support for existing components */
+  --bg-primary:      #f8fafc;
+  --bg-secondary:    #1e293b;
+  --bg-card:         #ffffff;
+  --border:          #e2e8f0;
+  --text-primary:    #0f172a;
+  --text-secondary:  #374151;
+}
+
+body {
+  background-color: var(--light-bg);
+  color: var(--text-body);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: var(--light-bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+a      { text-decoration: none; color: inherit; }
+button { cursor: pointer; font-family: inherit; }
+input, select, textarea { font-family: inherit; }
+
+html, body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
