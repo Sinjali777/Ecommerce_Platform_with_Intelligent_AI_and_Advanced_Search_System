@@ -16,12 +16,155 @@ function getSessionId() {
   }
   return id;
 }
+// ── Comparison Table Component ────────────────────────────────
+function ComparisonTable({ content }) {
+  const laptopAMatch = content.match(/Laptop A[:\s]+([^\n]+)/i);
+  const laptopBMatch = content.match(/Laptop B[:\s]+([^\n]+)/i);
+
+  const nameA = laptopAMatch ? laptopAMatch[1].trim() : 'Laptop A';
+  const nameB = laptopBMatch ? laptopBMatch[1].trim() : 'Laptop B';
+
+  const specPatterns = [
+    { label: 'Price',     regex: /Price[:\s]+Rs\.?([\d,]+)[^\n]*vs[^\n]*Rs\.?([\d,]+)/i },
+    { label: 'Processor', regex: /Processor[:\s]+([^\n|]+)\|([^\n]+)/i },
+    { label: 'RAM',       regex: /RAM[:\s]+([^\n|]+)\|([^\n]+)/i },
+    { label: 'Storage',   regex: /Storage[:\s]+([^\n|]+)\|([^\n]+)/i },
+    { label: 'GPU',       regex: /GPU[:\s]+([^\n|]+)\|([^\n]+)/i },
+    { label: 'Rating',    regex: /Rating[:\s]+([^\n|]+)\|([^\n]+)/i },
+  ];
+
+  const rows = specPatterns
+    .map(p => {
+      const m = content.match(p.regex);
+      return m ? { label: p.label, a: m[1].trim(), b: m[2].trim() } : null;
+    })
+    .filter(Boolean);
+
+  return (
+    <div style={tableStyles.wrapper}>
+      <div style={tableStyles.summaryText}>
+        {content.split('\n').slice(0, 3).join(' ').slice(0, 200)}...
+      </div>
+      <div style={tableStyles.tableWrapper}>
+        <table style={tableStyles.table}>
+          <thead>
+            <tr>
+              <th style={tableStyles.th}>Spec</th>
+              <th style={{ ...tableStyles.th, color: '#93c5fd' }}>
+                🔵 {nameA.slice(0, 25)}
+              </th>
+              <th style={{ ...tableStyles.th, color: '#86efac' }}>
+                🟢 {nameB.slice(0, 25)}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.length > 0 ? rows.map((row, i) => (
+              <tr key={i} style={{
+                background: i % 2 === 0 ? '#f8fafc' : 'white'
+              }}>
+                <td style={tableStyles.labelCell}>{row.label}</td>
+                <td style={tableStyles.valueCell}>{row.a}</td>
+                <td style={tableStyles.valueCell}>{row.b}</td>
+              </tr>
+            )) : (
+              <tr>
+                <td colSpan={3} style={{ padding: 12 }}>
+                  <pre style={tableStyles.pre}>{content}</pre>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+      {content.toLowerCase().includes('better') && (
+        <div style={tableStyles.verdict}>
+          💡 {content.split('\n')
+            .find(l =>
+              l.toLowerCase().includes('better') ||
+              l.toLowerCase().includes('recommend') ||
+              l.toLowerCase().includes('winner'))
+            ?.trim() || ''}
+        </div>
+      )}
+    </div>
+  );
+}
+
+const tableStyles = {
+  wrapper: {
+    background:   'white',
+    borderRadius: 10,
+    overflow:     'hidden',
+    boxShadow:    '0 2px 8px rgba(0,0,0,0.08)',
+    maxWidth:     '100%',
+  },
+  summaryText: {
+    padding:      '10px 12px',
+    fontSize:     12,
+    color:        '#64748b',
+    background:   '#f8fafc',
+    borderBottom: '1px solid #e2e8f0',
+  },
+  tableWrapper: { overflowX: 'auto' },
+  table: {
+    width:          '100%',
+    borderCollapse: 'collapse',
+    fontSize:       12,
+  },
+  th: {
+    padding:    '10px 12px',
+    background: '#1e293b',
+    color:      'white',
+    fontWeight: 600,
+    textAlign:  'left',
+    whiteSpace: 'nowrap',
+  },
+  labelCell: {
+    padding:    '8px 12px',
+    fontWeight: 600,
+    color:      '#475569',
+    whiteSpace: 'nowrap',
+  },
+  valueCell: {
+    padding: '8px 12px',
+    color:   '#1e293b',
+  },
+  verdict: {
+    padding:    '10px 12px',
+    background: '#f0fdf4',
+    borderTop:  '1px solid #bbf7d0',
+    fontSize:   12,
+    color:      '#15803d',
+    fontWeight: 600,
+  },
+  pre: {
+    fontSize:   11,
+    whiteSpace: 'pre-wrap',
+    color:      '#475569',
+  }
+};
 
 function ChatPanel() {
   const [message,  setMessage]  = useState('');
   const [messages, setMessages] = useState([]);
   const [loading,  setLoading]  = useState(false);
   const [sessionId]             = useState(getSessionId);
+  const renderMessage = (msg) => {
+    const content = msg.content;
+
+    const isComparison =
+      (content.includes('Laptop A') && content.includes('Laptop B')) ||
+      (content.toLowerCase().includes('vs') &&
+      content.toLowerCase().includes('price')) ||
+      msg.intent === 'compare_products';
+
+    if (isComparison && msg.role === 'assistant') {
+      return <ComparisonTable content={content} />;
+    }
+
+    return <div className="message-bubble">{content}</div>;
+  };
   const bottomRef               = useRef(null);
   const { triggerAiSearch, clearAiSearch } = useChat();
 
@@ -176,8 +319,7 @@ if (data.search_triggered && data.matched_products?.length > 0) {
               <div key={i} className={`chat-message ${msg.role}`}>
 
                 {/* Message bubble */}
-                <div className="message-bubble">{msg.content}</div>
-
+                {renderMessage(msg)}
                 {/* Intent badge */}
                 {msg.intent && (
                   <div style={styles.intentBadge}>

@@ -425,9 +425,22 @@ Laptop B: {b['brand_name']} {b['model']}
     response = groq_client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=[
-            {"role": "system", "content":
-             "You are a laptop expert for Nepal. Compare clearly. "
-             "Say which is better for what use case and why. Be concise."},
+           {"role": "system", "content":
+            """You are a laptop expert for Nepal.
+            Compare the two laptops using this EXACT format:
+
+            Laptop A: [name]
+            Laptop B: [name]
+
+            Processor: [A processor] | [B processor]
+            RAM: [A ram] | [B ram]
+            Storage: [A storage] | [B storage]
+            GPU: [A gpu] | [B gpu]
+            Rating: [A rating]/5 | [B rating]/5
+
+            [2-3 sentences comparing overall value]
+
+            Winner: [which is better and why in one sentence]"""},
             {"role": "user", "content": context}
         ],
         temperature=0.4,
