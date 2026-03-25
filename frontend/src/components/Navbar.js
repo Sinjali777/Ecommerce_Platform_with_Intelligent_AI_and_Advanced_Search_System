@@ -42,8 +42,8 @@ function Navbar({ onSearch, splitMode, onToggleSplit, onFiltersChange, cartCount
 
         {/* Logo */}
         <div className="navbar-logo" onClick={() => navigate('/')}>
-          <span className="logo-icon">⚡</span>
-          <span className="logo-text">ElectroV</span>
+          <span className="logo-icon">💻</span>
+          <span className="logo-text">LaptopKinneHainaTa</span>
         </div>
 
         {/* Search */}

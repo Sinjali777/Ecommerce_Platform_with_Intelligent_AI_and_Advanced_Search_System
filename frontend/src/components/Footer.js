@@ -25,17 +25,17 @@ function Footer() {
         {/* Column 1 — Brand */}
         <div className="footer-brand">
           <div className="footer-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
-            <span className="footer-logo-icon">⚡</span>
-            <span className="footer-logo-text">ElectroV</span>
+            <span className="footer-logo-icon">💻</span>
+            <span className="footer-logo-text">LaptopKinneHainaTa</span>
           </div>
           <p className="footer-desc">
             Your intelligent laptop store powered by AI. Find the perfect laptop
             for your needs with smart recommendations and advanced search.
           </p>
           <div className="footer-contact">
-            <p>📍 Kathmandu, Nepal</p>
-            <p>📧 electrov@email.com</p>
-            <p>📞 +977-9800000000</p>
+            <p>📍 Kalanki, Kathmandu, Nepal</p>
+            <p>📧 laptopkinnehainata@email.com</p>
+            <p>📞 +977-97416613</p>
           </div>
         </div>
 
@@ -66,12 +66,13 @@ function Footer() {
         {/* Column 4 — About */}
         <div className="footer-col">
           <h4 className="footer-col-title">About Us</h4>
-          <ul className="footer-links">
-            <li onClick={() => navigate('/')}>About ElectroV</li>
-            <li onClick={() => navigate('/')}>Contact Us</li>
-            <li onClick={() => navigate('/')}>Privacy Policy</li>
-            <li onClick={() => navigate('/')}>Terms of Service</li>
-          </ul>
+          {/* Updated About Us Column */}
+            <ul className="footer-links">
+            <li onClick={() => navigate('/info/about')}>About LaptopKinneHainaTa</li>
+            <li onClick={() => navigate('/info/contact')}>Contact Us</li>
+            <li onClick={() => navigate('/info/privacy')}>Privacy Policy</li>
+            <li onClick={() => navigate('/info/terms')}>Terms of Service</li>
+        </ul>
           <div className="footer-ai-badge">
             <span>🤖</span>
             <span>AI Powered Store</span>
@@ -82,8 +83,7 @@ function Footer() {
 
       {/* Bottom Bar */}
       <div className="footer-bottom">
-        <p>© 2025 ElectroV. All rights reserved.</p>
-        <p>Built with ⚡ and 🤖 AI</p>
+        <p>© 2025 LaptopKinneHainaTa. All rights reserved.</p>
       </div>
     </footer>
   );

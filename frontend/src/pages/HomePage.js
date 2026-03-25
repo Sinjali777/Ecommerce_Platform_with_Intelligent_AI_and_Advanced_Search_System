@@ -50,6 +50,26 @@ function HomePage({ splitMode, searchQuery, filters = {} }) {
     // eslint-disable-next-line
   }, [activeTab]);
 
+  useEffect(() => {
+    const handleUseCaseEvent = (e) => {
+      const useCase = e.detail;
+      console.log("Footer Category clicked:", useCase);
+      
+      // This forces the page to scroll down to the product section
+      const section = document.getElementById('our-services');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      // Note: Because filters are passed as a prop from App.js, 
+      // you may need to ensure your Navbar/App logic also updates 
+      // when this event fires to actually change the products shown.
+    };
+
+    window.addEventListener('filter-use-case', handleUseCaseEvent);
+    return () => window.removeEventListener('filter-use-case', handleUseCaseEvent);
+  }, []);
+
   const fetchProducts = async () => {
     try {
       setLoading(true);
@@ -200,7 +220,7 @@ function HomePage({ splitMode, searchQuery, filters = {} }) {
           <div style={styles.aiBanner}>
             <span style={styles.aiBannerIcon}>🤖</span>
             <span>
-              These results were found by ElectroV AI based on your request.
+              These results were found by LaptopKinneHainaTa AI based on your request.
               Clear to see all products.
             </span>
           </div>

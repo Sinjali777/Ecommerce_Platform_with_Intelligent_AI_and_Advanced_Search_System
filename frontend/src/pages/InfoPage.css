@@ -1,0 +1,121 @@
+.info-page {
+  padding-bottom: 80px;
+  background: #fcfcfd;
+}
+
+.info-hero {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  color: white;
+  padding: 100px 20px 60px;
+  text-align: center;
+  clip-path: ellipse(150% 100% at 50% 0%);
+}
+
+.info-hero-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.info-hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+}
+
+.info-hero .subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.info-container {
+  max-width: 1000px;
+  margin: -40px auto 0;
+  padding: 0 20px;
+}
+
+/* Content Cards */
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.content-card {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+  border: 1px solid #f1f5f9;
+  transition: transform 0.3s ease;
+}
+
+.content-card:hover {
+  transform: translateY(-5px);
+}
+
+.content-card h3 {
+  color: #3b82f6;
+  margin-bottom: 15px;
+}
+
+/* Contact Page Specifics */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 30px;
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+}
+
+.info-card {
+  padding: 20px;
+  background: #f8fafc;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form input, .contact-form textarea {
+  padding: 15px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.contact-form button {
+  padding: 15px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.contact-form button:hover {
+  background: #2563eb;
+}
+
+.success-msg {
+  padding: 40px;
+  text-align: center;
+  background: #f0fdf4;
+  color: #15803d;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .contact-grid { grid-template-columns: 1fr; }
+  .info-hero h1 { font-size: 2rem; }
+}

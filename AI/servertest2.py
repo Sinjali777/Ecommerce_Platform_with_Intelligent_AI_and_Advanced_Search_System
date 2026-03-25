@@ -133,36 +133,58 @@ print("⏳ Connecting to Groq...")
 groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 print("✅ NLP Server ready!")
 
-# ── Intent Detection ──────────────────────────────────────────
-SEARCH_KEYWORDS = [
-    # Direct requests
-    'find', 'search', 'show', 'get', 'give', 'list',
-    'looking for', 'need', 'want', 'suggest', 'recommend',
-    # Product types
-    'laptop', 'macbook', 'notebook', 'computer', 'pc',
-    # Use cases
-    'gaming', 'editing', 'video editing', 'coding', 'programming',
-    'student', 'office', 'work', 'design', 'school', 'college',
-    # Specs
-    'ram', 'ssd', 'gpu', 'graphics', 'processor', 'cpu',
-    'display', 'screen', 'battery', 'storage', 'memory',
-    # Price
-    'budget', 'cheap', 'affordable', 'expensive', 'price',
-    'cost', 'under', 'below', 'within', 'rs', 'npr', 'rupee',
-    # Brands — important!
-    'asus', 'hp', 'lenovo', 'acer', 'apple', 'mac', 'dell',
-    'msi', 'samsung', 'lg', 'microsoft', 'surface',
-    # Compare
-    'compare', 'vs', 'versus', 'difference', 'better', 'which',
-    'best', 'good', 'top', 'worst',
-    # Actions
-    'buy', 'purchase', 'order', 'available',
-]
-
+# ── LLM-Based Intent Classifier (replaces keyword approach) ───
 def needs_product_search(message: str) -> bool:
-    msg_lower = message.lower()
-    # Always search if any keyword matches
-    return any(kw in msg_lower for kw in SEARCH_KEYWORDS)
+    """
+    Uses an LLM to determine whether the user's message implies
+    product search intent (finding, comparing, or pricing laptops).
+    Returns True for product-related queries, False for general chat.
+    """
+    response = groq_client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "You are an intent classifier for a Nepal-based laptop store chatbot.\n"
+                    "Your only job is to decide if the user's message requires searching "
+                    "a laptop database.\n\n"
+                    "Reply with YES if the message involves ANY of:\n"
+                    "- Looking for, finding, or buying a laptop or computer\n"
+                    "- Asking about specs, price, or availability of a device\n"
+                    "- Comparing two laptops or models\n"
+                    "- Mentioning a use case that implies needing a laptop "
+                    "  (e.g. gaming, coding, schoolwork, video editing, office work)\n"
+                    "- Mentioning a brand that sells laptops "
+                    "  (e.g. Apple, HP, Asus, Lenovo, Acer, Dell, MSI)\n"
+                    "- Asking for a recommendation or suggestion for a machine/device\n\n"
+                    "Reply with NO if the message is:\n"
+                    "- A greeting or small talk (hi, hello, how are you)\n"
+                    "- A general question unrelated to laptops or computers\n"
+                    "- A thank you or farewell\n\n"
+                    "EXAMPLES:\n"
+                    "  'I need a machine for my kids to do schoolwork' → YES\n"
+                    "  'something powerful for gaming under 1 lakh' → YES\n"
+                    "  'show me a mac' → YES\n"
+                    "  'which is better for video editing?' → YES\n"
+                    "  'hello, how are you?' → NO\n"
+                    "  'what is RAM?' → NO\n"
+                    "  'thanks, bye!' → NO\n\n"
+                    "Respond with ONLY the single word YES or NO. No explanation."
+                )
+            },
+            {
+                "role": "user",
+                "content": message
+            }
+        ],
+        temperature=0.0,
+        max_tokens=5,
+    )
+
+    verdict = response.choices[0].message.content.strip().upper()
+    return verdict.startswith("YES")
+
 
 # ── Helper Functions ──────────────────────────────────────────
 def extract_filters(query: str) -> dict:
@@ -280,7 +302,7 @@ Laptop {i}: {row['brand_name']} {row['model']}
 @app.post("/chat")
 async def chat(req: ChatRequest):
 
-    do_search = needs_product_search(req.message)
+    do_search = needs_product_search(req.message)   # ← LLM-based classifier
 
     filters          = {}
     matched_products = []
@@ -305,7 +327,7 @@ async def chat(req: ChatRequest):
             "storage_gb":    int(row['memory_size']),
             "gpu_type":      str(row['gpu_type']),
             "processor":     str(row['processor']),
-            "display_size":  float(row['display_size']),   
+            "display_size":  float(row['display_size']),
                 })
 
    # Build system prompt

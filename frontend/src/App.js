@@ -10,6 +10,8 @@ import ChatPanel   from './components/ChatPanel';
 import CartDrawer  from './components/CartDrawer';
 import HomePage    from './pages/HomePage';
 import ProductPage from './pages/ProductPage';
+import InfoPage from './pages/InfoPage.js';
+
 
 function AppContent() {
   const [splitMode, setSplitMode]     = useState(false);
@@ -51,6 +53,8 @@ function AppContent() {
               />
             }
           />
+
+        <Route path="/info/:type" element={<InfoPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>
